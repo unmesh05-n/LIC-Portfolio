@@ -1,37 +1,58 @@
 @import "tailwindcss";
 
 @theme {
-  /* Redefining your existing variables to the new Luxury Palette */
-  --color-midnight: #0D0D0F;
-  /* Warm Onyx - Deep, rich, expensive black */
-  --color-secondary-dark: #151518;
-  /* Elevated Charcoal */
-  --color-navy: #1A1A1E;
-  /* Soft Surface */
-  --color-soft-blue: #26262B;
-  /* Subtle hover state */
+  /* ---------------------------------------------------------------------- */
+  /* Luxury palette                                                        */
+  /* ---------------------------------------------------------------------- */
 
-  /* The "Silver" is now a sophisticated Champagne/Bronze */
-  --color-silver: #C6A87C;
-  --color-light-silver: #A1A1AA;
-  /* Warm gray for reading */
-  --color-off-white: #F8F6F0;
-  /* Pearl Ivory for headings (less harsh than white) */
+  --color-midnight: #0d0d0f;
+  --color-secondary-dark: #151518;
+  --color-navy: #1a1a1e;
+  --color-soft-blue: #26262b;
+
+  --color-silver: #c6a87c;
+  --color-light-silver: #a1a1aa;
+  --color-off-white: #f8f6f0;
+
+  /* ---------------------------------------------------------------------- */
+  /* Typography                                                            */
+  /* ---------------------------------------------------------------------- */
 
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-inter);
 }
 
 @layer base {
+  /* ====================================================================== */
+  /* DOCUMENT                                                              */
+  /* ====================================================================== */
+
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+    background: var(--color-midnight);
   }
 
   body {
+    min-height: 100vh;
+    overflow-x: hidden;
     background-color: var(--color-midnight);
     color: var(--color-light-silver);
+    font-family: var(--font-sans), sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* ====================================================================== */
+  /* TYPOGRAPHY                                                            */
+  /* ====================================================================== */
 
   h1,
   h2,
@@ -39,43 +60,420 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-serif);
+    margin: 0;
+    font-family: var(--font-serif), serif;
     color: var(--color-off-white);
+    font-weight: 400;
+    text-wrap: balance;
   }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  img,
+  video,
+  svg {
+    max-width: 100%;
+  }
+
+  img {
+    display: block;
+  }
+
+  /* ====================================================================== */
+  /* SELECTION                                                             */
+  /* ====================================================================== */
 
   ::selection {
     background-color: var(--color-silver);
     color: var(--color-midnight);
   }
+
+  ::-moz-selection {
+    background-color: var(--color-silver);
+    color: var(--color-midnight);
+  }
+
+  /* ====================================================================== */
+  /* KEYBOARD ACCESSIBILITY                                                 */
+  /* ====================================================================== */
+
+  :focus-visible {
+    outline: 1px solid var(--color-silver);
+    outline-offset: 4px;
+  }
+
+  /* ====================================================================== */
+  /* MOBILE FORM CONTROLS                                                   */
+  /* ====================================================================== */
+
+  input,
+  textarea {
+    border-radius: 0;
+  }
+
+  textarea {
+    field-sizing: content;
+    min-height: 120px;
+  }
 }
 
-/* Cinematic Film Grain Base */
+/* ========================================================================== */
+/* CINEMATIC FILM GRAIN                                                       */
+/* ========================================================================== */
+
 .film-grain {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
+  inset: 0;
   z-index: 9999;
-  opacity: 0.04;
+  pointer-events: none;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Custom scrollbar */
+/* ========================================================================== */
+/* PREMIUM SCROLLBAR                                                          */
+/* ========================================================================== */
+
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--color-midnight);
+  background: var(--color-midnight);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-soft-blue);
+  background: var(--color-soft-blue);
   border-radius: 9999px;
+  border: 1px solid var(--color-midnight);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-silver);
+  background: var(--color-silver);
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-soft-blue) var(--color-midnight);
+}
+
+/* ========================================================================== */
+/* PREMIUM UTILITIES                                                          */
+/* ========================================================================== */
+
+/*
+ * Used for sections that contain large decorative / animated elements.
+ * Keeps those elements from producing horizontal page overflow.
+ */
+.section-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+/*
+ * Slightly elevated glass surface used sparingly in navigation/cards.
+ */
+.glass-surface {
+  background: rgb(13 13 15 / 0.72);
+  border: 1px solid rgb(198 168 124 / 0.1);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/*
+ * Subtle divider used throughout the editorial layout.
+ */
+.editorial-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgb(198 168 124 / 0.18),
+      transparent);
+}
+
+/* ========================================================================== */
+/* AMBIENT BACKGROUND SYSTEM                                                  */
+/* ========================================================================== */
+
+/*
+ * Base container for atmospheric visual layers.
+ *
+ * These layers are intentionally subtle. They add depth without competing
+ * with the actual content of the portfolio.
+ */
+.ambient-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+}
+
+/*
+ * Large blurred light source.
+ *
+ * The movement is intentionally very slow so the background feels alive
+ * rather than visibly animated.
+ */
+.ambient-glow {
+  position: absolute;
+  width: clamp(18rem, 38vw, 38rem);
+  height: clamp(18rem, 38vw, 38rem);
+  border-radius: 9999px;
+  background: radial-gradient(circle,
+      rgb(198 168 124 / 0.075) 0%,
+      rgb(198 168 124 / 0.035) 28%,
+      transparent 72%);
+  filter: blur(12px);
+  opacity: 0.85;
+  transform: translate3d(0, 0, 0);
+  animation: ambient-drift 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/*
+ * Secondary cooler atmospheric layer.
+ *
+ * Kept extremely restrained so the palette remains dark and sophisticated.
+ */
+.ambient-glow-secondary {
+  position: absolute;
+  width: clamp(20rem, 42vw, 44rem);
+  height: clamp(20rem, 42vw, 44rem);
+  border-radius: 9999px;
+  background: radial-gradient(circle,
+      rgb(100 110 140 / 0.045) 0%,
+      rgb(100 110 140 / 0.02) 32%,
+      transparent 72%);
+  filter: blur(18px);
+  opacity: 0.75;
+  transform: translate3d(0, 0, 0);
+  animation: ambient-drift-secondary 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/*
+ * Very fine atmospheric dust.
+ *
+ * This is not a traditional particle field. It is a static texture layer
+ * with extremely subtle movement, keeping rendering inexpensive.
+ */
+.ambient-dust {
+  position: absolute;
+  inset: -20%;
+  opacity: 0.12;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(248 246 240 / 0.18) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, rgb(198 168 124 / 0.14) 0 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgb(248 246 240 / 0.1) 0 1px, transparent 1px);
+  background-size:
+    180px 180px,
+    240px 240px,
+    320px 320px;
+  animation: dust-drift 30s linear infinite;
+  will-change: transform;
+}
+
+/*
+ * Fine editorial grid.
+ *
+ * Intended for selected sections only, not globally.
+ */
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image:
+    linear-gradient(to right,
+      rgb(248 246 240 / 0.1) 1px,
+      transparent 1px),
+    linear-gradient(to bottom,
+      rgb(248 246 240 / 0.1) 1px,
+      transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom,
+      transparent,
+      black 18%,
+      black 82%,
+      transparent);
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent,
+      black 18%,
+      black 82%,
+      transparent);
+}
+
+/*
+ * A soft vignette helps keep attention toward the content.
+ */
+.ambient-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center,
+      transparent 35%,
+      rgb(13 13 15 / 0.3) 100%);
+}
+
+/* ========================================================================== */
+/* DEPTH / PERSPECTIVE UTILITIES                                               */
+/* ========================================================================== */
+
+/*
+ * Establishes a 3D perspective context for components that use subtle
+ * transforms from Framer Motion.
+ */
+.depth-perspective {
+  perspective: 1400px;
+  perspective-origin: center center;
+}
+
+/*
+ * Prevents transformed elements from looking artificially flat.
+ */
+.depth-layer {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/*
+ * Lightweight GPU compositing hint for animated decorative elements.
+ */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* ========================================================================== */
+/* AMBIENT ANIMATION KEYFRAMES                                                  */
+/* ========================================================================== */
+
+@keyframes ambient-drift {
+  0% {
+    transform: translate3d(-5%, -3%, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(3%, 4%, 0) scale(1.045);
+  }
+
+  100% {
+    transform: translate3d(7%, -2%, 0) scale(1.02);
+  }
+}
+
+@keyframes ambient-drift-secondary {
+  0% {
+    transform: translate3d(6%, 4%, 0) scale(1.02);
+  }
+
+  50% {
+    transform: translate3d(-4%, -2%, 0) scale(1.06);
+  }
+
+  100% {
+    transform: translate3d(-7%, 5%, 0) scale(1);
+  }
+}
+
+@keyframes dust-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-1.5%, 1%, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 2%, 0);
+  }
+}
+
+/* ========================================================================== */
+/* REDUCED MOTION                                                             */
+/* ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .ambient-glow,
+  .ambient-glow-secondary,
+  .ambient-dust {
+    animation: none !important;
+  }
+}
+
+/* ========================================================================== */
+/* SMALL-SCREEN REFINEMENTS                                                    */
+/* ========================================================================== */
+
+@media (max-width: 767px) {
+  .film-grain {
+    opacity: 0.025;
+  }
+
+  /*
+   * Reduce atmospheric intensity on mobile to preserve readability and
+   * avoid unnecessary visual/rendering load.
+   */
+  .ambient-glow,
+  .ambient-glow-secondary {
+    opacity: 0.55;
+    filter: blur(18px);
+  }
+
+  .ambient-dust {
+    opacity: 0.07;
+    animation-duration: 42s;
+  }
+
+  .ambient-grid {
+    opacity: 0.02;
+    background-size: 56px 56px;
+  }
+}
+
+/* ========================================================================== */
+/* TOUCH / HOVER REFINEMENT                                                    */
+/* ========================================================================== */
+
+/*
+ * Prevent hover-heavy interactions from being treated as primary
+ * interactions on touch devices.
+ */
+@media (hover: none) {
+  .hover-only {
+    display: none;
+  }
 }
