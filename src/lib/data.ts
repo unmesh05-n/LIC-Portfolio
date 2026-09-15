@@ -446,7 +446,7 @@ export const siteData = {
             description:
                 "A personal professional moment with the MDRT recognition.",
             image:
-                "https://res.cloudinary.com/djblsvzgm/image/upload/mdrt-trophy-moment.jpg_feayb1",
+                "https://res.cloudinary.com/djblsvzgm/image/upload/mdrt-trophy-moment.jpg_aa268q",
             alt: "Darshanee Lokhande with professional recognition trophy",
             category: "RECOGNITION",
         },
