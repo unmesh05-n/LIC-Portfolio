@@ -78,8 +78,8 @@ export default function Navbar() {
       {/* Navigation */}
       <nav
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || mobileMenuOpen
-            ? "border-b border-silver/10 bg-midnight/85 py-4 backdrop-blur-xl"
-            : "bg-transparent py-6"
+          ? "border-b border-silver/10 bg-midnight/85 py-4 backdrop-blur-xl"
+          : "bg-transparent py-6"
           }`}
         aria-label="Primary navigation"
       >
@@ -113,6 +113,20 @@ export default function Navbar() {
                 <span className="absolute bottom-0 left-0 h-px w-0 bg-silver transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
+
+            <a
+              href={siteData.lic.officialLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group ml-1 inline-flex items-center gap-2 border border-silver/20 bg-soft-blue/15 px-4 py-2.5 text-[10px] uppercase tracking-[0.14em] text-off-white transition-all duration-300 hover:border-silver/40 hover:bg-soft-blue/40"
+            >
+              LIC Payment
+
+              <ArrowRight
+                className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
+                strokeWidth={1.5}
+              />
+            </a>
 
             {/* Main contact CTA */}
             <a
@@ -252,6 +266,33 @@ export default function Navbar() {
                     />
                   </motion.a>
                 ))}
+                <motion.a
+                  href={siteData.lic.officialLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={closeMobileMenu}
+                  initial={{
+                    opacity: 0,
+                    x: -12,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  transition={{
+                    delay: links.length * 0.045,
+                    duration: 0.3,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="group flex items-center justify-between border-b border-silver/10 py-4 text-sm uppercase tracking-[0.12em] text-light-silver transition-colors duration-300 hover:text-off-white"
+                >
+                  <span>LIC Payment</span>
+
+                  <ArrowRight
+                    className="h-4 w-4 text-silver/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-silver"
+                    strokeWidth={1.3}
+                  />
+                </motion.a>
 
                 <a
                   href="#contact"
