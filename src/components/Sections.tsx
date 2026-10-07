@@ -3,27 +3,21 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
-    ArrowDown,
     ArrowRight,
-    Award,
-    BriefcaseBusiness,
-    Check,
     ChevronLeft,
     ChevronRight,
-    Clock3,
+    Download,
     ExternalLink,
-    Shield,
-    TrendingUp,
-    Users,
+    FileText,
     X,
 } from "lucide-react";
 
 import { siteData } from "@/lib/data";
-import {
-    ImageReveal,
-    SpatialSection,
-    SpotlightCard,
-} from "./Animations";
+import { ImageReveal } from "./Animations";
+
+/* -------------------------------------------------------------------------- */
+/* Shared animation                                                           */
+/* -------------------------------------------------------------------------- */
 
 type FadeInProps = {
     children: React.ReactNode;
@@ -39,7 +33,7 @@ const FadeIn = ({
     <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.18 }}
+        viewport={{ once: false, amount: 0.16 }}
         transition={{
             duration: 0.7,
             delay,
@@ -51,14 +45,9 @@ const FadeIn = ({
     </motion.div>
 );
 
-const serviceIcons = [
-    Shield,
-    TrendingUp,
-    Award,
-    Users,
-    BriefcaseBusiness,
-    Check,
-];
+/* -------------------------------------------------------------------------- */
+/* Shared section intro                                                       */
+/* -------------------------------------------------------------------------- */
 
 function SectionIntro({
     eyebrow,
@@ -77,16 +66,16 @@ function SectionIntro({
                 className={`max-w-3xl ${align === "center" ? "mx-auto text-center" : ""
                     }`}
             >
-                <span className="text-[11px] uppercase tracking-[0.24em] text-silver">
+                <span className="text-[11px] uppercase tracking-[0.24em] text-yellow">
                     {eyebrow}
                 </span>
 
-                <h2 className="mt-4 font-serif text-4xl leading-[1.08] text-off-white md:text-5xl lg:text-6xl">
+                <h2 className="mt-4 whitespace-pre-line font-serif text-4xl leading-[1.08] text-dark-blue md:text-5xl lg:text-6xl">
                     {title}
                 </h2>
 
                 {description && (
-                    <p className="mt-6 max-w-2xl text-base leading-7 text-light-silver/80 md:text-lg">
+                    <p className="mt-6 max-w-2xl text-base leading-7 text-dark-blue/70 md:text-lg">
                         {description}
                     </p>
                 )}
@@ -94,6 +83,10 @@ function SectionIntro({
         </FadeIn>
     );
 }
+
+/* -------------------------------------------------------------------------- */
+/* Shared button                                                              */
+/* -------------------------------------------------------------------------- */
 
 function ExploreButton({
     label,
@@ -105,7 +98,7 @@ function ExploreButton({
     onClick?: () => void;
 }) {
     const className =
-        "group inline-flex items-center gap-3 border-b border-silver/40 pb-2 text-xs uppercase tracking-[0.18em] text-off-white transition-colors duration-300 hover:border-silver hover:text-silver";
+        "group inline-flex items-center gap-3 border-b border-dark-blue/30 pb-2 text-xs uppercase tracking-[0.18em] text-dark-blue transition-colors duration-300 hover:border-yellow hover:text-dark-blue";
 
     if (onClick) {
         return (
@@ -136,15 +129,9 @@ function ExploreButton({
     );
 }
 
-type EditorialPanelProps = {
-    open: boolean;
-    onClose: () => void;
-    eyebrow: string;
-    title: string;
-    description?: string;
-    children: React.ReactNode;
-    width?: "default" | "wide";
-};
+/* -------------------------------------------------------------------------- */
+/* Editorial panel                                                            */
+/* -------------------------------------------------------------------------- */
 
 function EditorialPanel({
     open,
@@ -154,11 +141,17 @@ function EditorialPanel({
     description,
     children,
     width = "default",
-}: EditorialPanelProps) {
+}: {
+    open: boolean;
+    onClose: () => void;
+    eyebrow: string;
+    title: string;
+    description?: string;
+    children: React.ReactNode;
+    width?: "default" | "wide";
+}) {
     useEffect(() => {
-        if (!open) {
-            return;
-        }
+        if (!open) return;
 
         const previousOverflow = document.body.style.overflow;
 
@@ -178,9 +171,7 @@ function EditorialPanel({
         };
     }, [open, onClose]);
 
-    if (!open) {
-        return null;
-    }
+    if (!open) return null;
 
     return (
         <>
@@ -188,7 +179,7 @@ function EditorialPanel({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[40] bg-midnight/75 backdrop-blur-[3px]"
+                className="fixed inset-0 z-[40] bg-dark-blue/50 backdrop-blur-[3px]"
                 onClick={onClose}
                 aria-hidden="true"
             />
@@ -203,29 +194,25 @@ function EditorialPanel({
                 }}
                 role="dialog"
                 aria-modal="true"
-                aria-labelledby="editorial-panel-title"
-                className={`fixed inset-x-3 bottom-3 top-20 z-[45] overflow-hidden border border-silver/20 bg-secondary-dark shadow-2xl shadow-black/40 sm:inset-x-6 sm:bottom-6 ${width === "wide"
+                className={`fixed inset-x-3 bottom-3 top-20 z-[45] overflow-hidden border border-dark-blue/10 bg-white shadow-2xl sm:inset-x-6 sm:bottom-6 ${width === "wide"
                     ? "md:left-1/2 md:right-auto md:w-[min(1120px,calc(100vw-48px))] md:-translate-x-1/2"
                     : "md:left-1/2 md:right-auto md:w-[min(900px,calc(100vw-48px))] md:-translate-x-1/2"
                     }`}
                 onClick={(event) => event.stopPropagation()}
             >
                 <div className="flex h-full flex-col">
-                    <div className="flex shrink-0 items-start justify-between gap-6 border-b border-silver/10 px-6 py-6 sm:px-8 md:px-10">
+                    <div className="flex shrink-0 items-start justify-between gap-6 border-b border-dark-blue/10 px-6 py-6 sm:px-8 md:px-10">
                         <div className="min-w-0">
-                            <span className="text-[10px] uppercase tracking-[0.24em] text-silver">
+                            <span className="text-[10px] uppercase tracking-[0.24em] text-yellow">
                                 {eyebrow}
                             </span>
 
-                            <h2
-                                id="editorial-panel-title"
-                                className="mt-3 max-w-3xl font-serif text-3xl leading-[1.08] text-off-white sm:text-4xl md:text-5xl"
-                            >
+                            <h2 className="mt-3 max-w-3xl font-serif text-3xl leading-[1.08] text-dark-blue sm:text-4xl md:text-5xl">
                                 {title}
                             </h2>
 
                             {description && (
-                                <p className="mt-4 max-w-2xl text-sm leading-7 text-light-silver/70 md:text-base">
+                                <p className="mt-4 max-w-2xl text-sm leading-7 text-dark-blue/65 md:text-base">
                                     {description}
                                 </p>
                             )}
@@ -235,7 +222,7 @@ function EditorialPanel({
                             type="button"
                             onClick={onClose}
                             aria-label="Close details"
-                            className="group flex h-10 w-10 shrink-0 items-center justify-center border border-silver/15 text-light-silver transition-colors duration-300 hover:border-silver/40 hover:text-off-white"
+                            className="group flex h-10 w-10 shrink-0 items-center justify-center border border-dark-blue/15 text-dark-blue transition-colors duration-300 hover:border-dark-blue/40"
                         >
                             <X
                                 className="h-5 w-5 transition-transform duration-300 group-hover:rotate-90"
@@ -244,10 +231,7 @@ function EditorialPanel({
                         </button>
                     </div>
 
-                    <div
-                        className={`min-h-0 flex-1 overflow-y-auto px-6 py-8 sm:px-8 md:px-10 md:py-10 ${width === "wide" ? "max-w-none" : ""
-                            }`}
-                    >
+                    <div className="min-h-0 flex-1 overflow-y-auto px-6 py-8 sm:px-8 md:px-10 md:py-10">
                         {children}
                     </div>
                 </div>
@@ -256,24 +240,9 @@ function EditorialPanel({
     );
 }
 
-function DetailParagraphs({
-    paragraphs,
-}: {
-    paragraphs: readonly string[];
-}) {
-    return (
-        <div className="space-y-5">
-            {paragraphs.map((paragraph, index) => (
-                <p
-                    key={`${paragraph.slice(0, 24)}-${index}`}
-                    className="text-sm leading-7 text-light-silver/75 md:text-base"
-                >
-                    {paragraph}
-                </p>
-            ))}
-        </div>
-    );
-}
+/* -------------------------------------------------------------------------- */
+/* Shared list                                                                */
+/* -------------------------------------------------------------------------- */
 
 function DetailList({
     items,
@@ -285,10 +254,11 @@ function DetailList({
             {items.map((item, index) => (
                 <li
                     key={`${item}-${index}`}
-                    className="flex items-start gap-4 border-b border-silver/10 pb-4 last:border-b-0"
+                    className="flex items-start gap-4 border-b border-dark-blue/10 pb-4 last:border-b-0"
                 >
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-silver" />
-                    <span className="text-sm leading-7 text-light-silver/80 md:text-base">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-yellow" />
+
+                    <span className="text-sm leading-7 text-dark-blue/75 md:text-base">
                         {item}
                     </span>
                 </li>
@@ -297,50 +267,28 @@ function DetailList({
     );
 }
 
-function PanelSectionHeading({
-    eyebrow,
-    title,
-}: {
-    eyebrow?: string;
-    title: string;
-}) {
-    return (
-        <div className="mb-7">
-            {eyebrow && (
-                <span className="text-[10px] uppercase tracking-[0.22em] text-silver/80">
-                    {eyebrow}
-                </span>
-            )}
-
-            <h3 className="mt-2 font-serif text-2xl text-off-white md:text-3xl">
-                {title}
-            </h3>
-        </div>
-    );
-}
-
 /* -------------------------------------------------------------------------- */
-/* 02 — CREDIBILITY SNAPSHOT                                                  */
+/* 01 — Stats                                                                 */
 /* -------------------------------------------------------------------------- */
 
 export function Stats() {
     return (
         <section
             aria-label="Professional highlights"
-            className="border-y border-silver/10 bg-secondary-dark"
+            className="border-y border-dark-blue/10 bg-white"
         >
-            <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x-0 px-6 py-14 md:grid-cols-4 md:divide-x md:py-18">
+            <div className="mx-auto grid max-w-7xl grid-cols-2 md:grid-cols-4">
                 {siteData.stats.map((stat, index) => (
                     <FadeIn
                         key={`${stat.label}-${index}`}
-                        delay={index * 0.08}
-                        className="px-5 py-4 text-center md:px-8"
+                        delay={index * 0.07}
+                        className="border-dark-blue/10 px-5 py-10 text-center md:border-r md:px-8 md:py-14 last:border-r-0"
                     >
-                        <div className="font-serif text-4xl leading-none text-off-white md:text-5xl">
+                        <div className="font-serif text-3xl leading-none text-dark-blue md:text-4xl">
                             {stat.value}
                         </div>
 
-                        <div className="mt-3 text-[11px] uppercase tracking-[0.18em] text-silver">
+                        <div className="mt-3 text-[10px] uppercase tracking-[0.18em] text-dark-blue/55">
                             {stat.label}
                         </div>
                     </FadeIn>
@@ -351,7 +299,7 @@ export function Stats() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 03 — PROFESSIONAL PROFILE                                                   */
+/* 02 — About                                                                 */
 /* -------------------------------------------------------------------------- */
 
 export function About() {
@@ -361,14 +309,14 @@ export function About() {
         <>
             <section
                 id="about"
-                className="bg-midnight py-28 md:py-36"
+                className="bg-white py-24 md:py-32"
             >
                 <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 md:grid-cols-[0.9fr_1.1fr] md:gap-20 lg:gap-28">
                     <FadeIn>
                         <div className="relative mx-auto max-w-xl">
-                            <div className="absolute -inset-3 border border-silver/10" />
+                            <div className="absolute -inset-3 border border-dark-blue/10" />
 
-                            <div className="relative aspect-[4/5] overflow-hidden bg-navy">
+                            <div className="relative aspect-[4/5] overflow-hidden bg-slate-50">
                                 <ImageReveal
                                     src={siteData.about.image}
                                     alt={siteData.about.imageAlt}
@@ -376,25 +324,25 @@ export function About() {
                                 />
                             </div>
 
-                            <div className="absolute -bottom-5 -right-5 hidden h-24 w-24 border-b border-r border-silver/30 md:block" />
+                            <div className="absolute -bottom-5 -right-5 hidden h-24 w-24 border-b border-r border-yellow md:block" />
                         </div>
                     </FadeIn>
 
-                    <FadeIn delay={0.15}>
+                    <FadeIn delay={0.12}>
                         <div>
-                            <span className="text-[11px] uppercase tracking-[0.24em] text-silver">
+                            <span className="text-[11px] uppercase tracking-[0.24em] text-yellow">
                                 {siteData.about.eyebrow}
                             </span>
 
-                            <h2 className="mt-5 whitespace-pre-line font-serif text-4xl leading-[1.1] text-off-white md:text-5xl lg:text-6xl">
+                            <h2 className="mt-5 whitespace-pre-line font-serif text-4xl leading-[1.1] text-dark-blue md:text-5xl lg:text-6xl">
                                 {siteData.about.headline}
                             </h2>
 
-                            <p className="mt-7 max-w-2xl text-base leading-7 text-light-silver/85">
+                            <p className="mt-7 max-w-2xl text-base leading-7 text-dark-blue/75">
                                 {siteData.about.introduction}
                             </p>
 
-                            <div className="mt-6 space-y-5 text-[15px] leading-7 text-light-silver/75">
+                            <div className="mt-6 space-y-5 text-[15px] leading-7 text-dark-blue/65">
                                 {siteData.about.paragraphs.map(
                                     (paragraph, index) => (
                                         <p
@@ -409,14 +357,14 @@ export function About() {
                                 )}
                             </div>
 
-                            <ul className="mt-8 space-y-3 border-t border-silver/10 pt-7">
+                            <ul className="mt-8 space-y-3 border-t border-dark-blue/10 pt-7">
                                 {siteData.about.highlights.map(
                                     (highlight, index) => (
                                         <li
                                             key={`${highlight}-${index}`}
-                                            className="flex items-start gap-3 text-sm text-off-white"
+                                            className="flex items-start gap-3 text-sm text-dark-blue"
                                         >
-                                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-silver" />
+                                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-yellow" />
                                             <span>{highlight}</span>
                                         </li>
                                     ),
@@ -439,15 +387,25 @@ export function About() {
                 onClose={() => setIsOpen(false)}
                 eyebrow={siteData.about.eyebrow}
                 title={siteData.about.readMoreTitle}
-                description="A closer look at the professional background and experience behind the practice."
+                description="Professional profile and background."
             >
-                <div className="mx-auto max-w-3xl">
-                    <DetailParagraphs
-                        paragraphs={siteData.about.readMoreContent}
-                    />
+                <div className="mx-auto max-w-3xl space-y-10">
+                    <div className="space-y-5">
+                        {siteData.about.paragraphs.map((paragraph, index) => (
+                            <p
+                                key={`${paragraph.slice(0, 24)}-${index}`}
+                                className="text-sm leading-7 text-dark-blue/70 md:text-base"
+                            >
+                                {paragraph}
+                            </p>
+                        ))}
+                    </div>
 
-                    <div className="mt-10 border-t border-silver/10 pt-8">
-                        <PanelSectionHeading title="Professional highlights" />
+                    <div className="border-t border-dark-blue/10 pt-8">
+                        <h3 className="mb-6 font-serif text-2xl text-dark-blue">
+                            Professional highlights
+                        </h3>
+
                         <DetailList items={siteData.about.highlights} />
                     </div>
                 </div>
@@ -457,550 +415,95 @@ export function About() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 04 — PROFESSIONAL REACH                                                    */
+/* 03 — Insurance                                                             */
 /* -------------------------------------------------------------------------- */
 
-export function Experience() {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const reachItems = [
-        {
-            number: "01",
-            title: "Insurance Consultancy",
-            description:
-                "Professional insurance guidance built around protection requirements and informed decisions.",
-        },
-        {
-            number: "02",
-            title: "Financial Guidance",
-            description:
-                "Financial planning, investment-related guidance and wealth-creation support.",
-        },
-        {
-            number: "03",
-            title: "Business Risk",
-            description:
-                "Insurance and risk-management support relevant to businesses and their people.",
-        },
-        {
-            number: "04",
-            title: "Broader Protection",
-            description:
-                "Health, family and general insurance support across a range of requirements.",
-        },
-    ];
-
-    return (
-        <>
-            <section
-                id="reach"
-                className="relative overflow-hidden bg-secondary-dark py-28 md:py-36"
-            >
-                <div className="mx-auto max-w-7xl px-6">
-                    <div className="grid gap-16 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-                        <SectionIntro
-                            eyebrow="PROFESSIONAL REACH"
-                            title="A Practice Built Around Real Financial Needs."
-                            description="Her work extends across insurance, financial guidance, investment-related consultancy and risk management for individuals, families and businesses."
-                        />
-
-                        <FadeIn delay={0.15}>
-                            <div className="grid gap-px overflow-hidden border border-silver/10 bg-silver/10 sm:grid-cols-2">
-                                {reachItems.map((item) => (
-                                    <div
-                                        key={item.number}
-                                        className="group bg-secondary-dark p-7 transition-colors duration-500 hover:bg-midnight md:p-8"
-                                    >
-                                        <span className="font-serif text-2xl text-silver/45">
-                                            {item.number}
-                                        </span>
-
-                                        <h3 className="mt-6 text-lg text-off-white">
-                                            {item.title}
-                                        </h3>
-
-                                        <p className="mt-3 text-sm leading-7 text-light-silver/70">
-                                            {item.description}
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        </FadeIn>
-                    </div>
-
-                    <FadeIn
-                        delay={0.2}
-                        className="mt-14 flex flex-col items-center gap-7 text-center"
-                    >
-                        <ExploreButton
-                            label="Explore professional reach"
-                            onClick={() => setIsOpen(true)}
-                        />
-
-                        <a
-                            href="#lic"
-                            className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-silver transition-colors hover:text-off-white"
-                        >
-                            Continue to LIC association
-
-                            <ArrowDown
-                                className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-1"
-                                strokeWidth={1.5}
-                            />
-                        </a>
-                    </FadeIn>
-                </div>
-            </section>
-
-            <EditorialPanel
-                open={isOpen}
-                onClose={() => setIsOpen(false)}
-                eyebrow="PROFESSIONAL REACH"
-                title="The breadth of the practice"
-                description="The practice brings together multiple areas of insurance and financial guidance without reducing the work to a single product or service."
-                width="wide"
-            >
-                <div className="mx-auto max-w-4xl">
-                    <div className="grid gap-5 md:grid-cols-2">
-                        {siteData.services.map((service, index) => (
-                            <article
-                                key={`${service.title}-${index}-reach`}
-                                className="border border-silver/10 bg-midnight p-7"
-                            >
-                                <span className="font-serif text-2xl text-silver/45">
-                                    {String(index + 1).padStart(2, "0")}
-                                </span>
-
-                                <h3 className="mt-5 font-serif text-2xl text-off-white">
-                                    {service.title}
-                                </h3>
-
-                                <p className="mt-3 text-sm leading-7 text-light-silver/75">
-                                    {service.description}
-                                </p>
-
-                                <div className="mt-6 border-t border-silver/10 pt-6">
-                                    <DetailList items={service.details} />
-                                </div>
-                            </article>
-                        ))}
-                    </div>
-                </div>
-            </EditorialPanel>
-        </>
-    );
-}
-
-/* -------------------------------------------------------------------------- */
-/* 05 — LIC ASSOCIATION                                                        */
-/* -------------------------------------------------------------------------- */
-
-export function LicAssociation() {
-    const lic = siteData.lic;
+export function Insurance() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <>
             <section
-                id="lic"
-                className="relative overflow-hidden bg-navy py-28 md:py-36"
-            >
-                <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 md:grid-cols-[1.1fr_0.9fr] md:gap-20">
-                    <FadeIn>
-                        <div>
-                            <span className="text-[11px] uppercase tracking-[0.24em] text-silver">
-                                {lic.eyebrow}
-                            </span>
-
-                            <h2 className="mt-5 font-serif text-4xl leading-[1.08] text-off-white md:text-5xl lg:text-6xl">
-                                {lic.title}
-                            </h2>
-
-                            <p className="mt-7 max-w-2xl text-base leading-7 text-light-silver/80">
-                                {lic.description}
-                            </p>
-
-                            <div className="mt-9 grid gap-4 sm:grid-cols-2">
-                                {lic.highlights.map((highlight, index) => (
-                                    <div
-                                        key={`${highlight}-${index}`}
-                                        className="border-l border-silver/20 pl-4"
-                                    >
-                                        <span className="text-sm leading-6 text-off-white">
-                                            {highlight}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="mt-10">
-                                <ExploreButton
-                                    label="Explore the LIC association"
-                                    onClick={() => setIsOpen(true)}
-                                />
-                            </div>
-                        </div>
-                    </FadeIn>
-
-                    <FadeIn delay={0.15}>
-                        <div className="relative">
-                            <div className="aspect-[4/5] overflow-hidden border border-silver/10 bg-secondary-dark">
-                                <ImageReveal
-                                    src={lic.image}
-                                    alt={lic.imageAlt}
-                                    className="h-full w-full"
-                                />
-                            </div>
-
-                            <div className="absolute -bottom-4 -left-4 border border-silver/20 bg-midnight/90 px-5 py-4 backdrop-blur-sm">
-                                <BriefcaseBusiness
-                                    className="mb-2 h-5 w-5 text-silver"
-                                    strokeWidth={1.4}
-                                />
-
-                                <span className="text-[10px] uppercase tracking-[0.18em] text-light-silver">
-                                    {lic.role}
-                                </span>
-
-                                <p className="mt-1 text-xs text-silver/70">
-                                    Since {lic.associationSince}
-                                </p>
-                            </div>
-                        </div>
-                    </FadeIn>
-                </div>
-            </section>
-
-            <EditorialPanel
-                open={isOpen}
-                onClose={() => setIsOpen(false)}
-                eyebrow={lic.eyebrow}
-                title={lic.title}
-                description={lic.description}
-            >
-                <div className="mx-auto max-w-3xl">
-                    <div className="mb-9 grid gap-4 sm:grid-cols-2">
-                        {lic.highlights.map((highlight, index) => (
-                            <div
-                                key={`${highlight}-${index}-panel`}
-                                className="border border-silver/10 bg-midnight/50 p-5"
-                            >
-                                <span className="text-[10px] uppercase tracking-[0.18em] text-silver/60">
-                                    {String(index + 1).padStart(2, "0")}
-                                </span>
-
-                                <p className="mt-3 text-sm leading-7 text-off-white">
-                                    {highlight}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {lic.detailedContent?.length > 0 && (
-                        <div className="border-t border-silver/10 pt-9">
-                            <PanelSectionHeading
-                                eyebrow="Professional association"
-                                title="The LIC chapter"
-                            />
-
-                            <DetailParagraphs
-                                paragraphs={lic.detailedContent}
-                            />
-                        </div>
-                    )}
-
-                    {lic.officialLink && (
-                        <div className="mt-9 border-t border-silver/10 pt-7">
-                            <a
-                                href={lic.officialLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-silver transition-colors hover:text-off-white"
-                            >
-                                Visit official LIC website
-                                <ExternalLink
-                                    className="h-3.5 w-3.5"
-                                    strokeWidth={1.5}
-                                />
-                            </a>
-                        </div>
-                    )}
-                </div>
-            </EditorialPanel>
-        </>
-    );
-}
-
-/* -------------------------------------------------------------------------- */
-/* 06 — EXPERTISE & SERVICES                                                  */
-/* -------------------------------------------------------------------------- */
-
-export function Services() {
-    const [selectedServiceIndex, setSelectedServiceIndex] = useState<
-        number | null
-    >(null);
-
-    const selectedService =
-        selectedServiceIndex !== null
-            ? siteData.services[selectedServiceIndex]
-            : null;
-
-    return (
-        <>
-            <section
-                id="services"
-                className="overflow-hidden bg-midnight py-28 md:py-36"
-            >
-                <SpatialSection>
-                    <div className="mx-auto max-w-7xl px-6">
-                        <SectionIntro
-                            eyebrow={siteData.servicesIntro.eyebrow}
-                            title={siteData.servicesIntro.title}
-                            description={siteData.servicesIntro.description}
-                        />
-
-                        <div className="mt-16 grid gap-5 md:grid-cols-2">
-                            {siteData.services.map((service, index) => {
-                                const Icon =
-                                    serviceIcons[
-                                    index % serviceIcons.length
-                                    ];
-
-                                return (
-                                    <SpotlightCard
-                                        key={`${service.title}-${index}`}
-                                        className="group h-full rounded-sm border border-silver/15 bg-secondary-dark p-7 md:p-9"
-                                    >
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                setSelectedServiceIndex(index)
-                                            }
-                                            className="flex h-full w-full flex-col text-left"
-                                        >
-                                            <div className="flex items-start justify-between gap-6">
-                                                <div className="flex h-11 w-11 items-center justify-center border border-silver/20 bg-midnight">
-                                                    <Icon
-                                                        className="h-5 w-5 text-silver"
-                                                        strokeWidth={1.4}
-                                                    />
-                                                </div>
-
-                                                <span className="font-serif text-sm text-silver/60">
-                                                    {String(index + 1).padStart(
-                                                        2,
-                                                        "0",
-                                                    )}
-                                                </span>
-                                            </div>
-
-                                            <h3 className="mt-8 font-serif text-2xl text-off-white">
-                                                {service.title}
-                                            </h3>
-
-                                            <p className="mt-4 text-sm leading-7 text-light-silver/75">
-                                                {service.description}
-                                            </p>
-
-                                            {service.benefit && (
-                                                <div className="mt-6 border-t border-silver/10 pt-5">
-                                                    <div className="flex gap-3 text-sm leading-6 text-off-white">
-                                                        <Check
-                                                            className="mt-1 h-4 w-4 shrink-0 text-silver"
-                                                            strokeWidth={1.5}
-                                                        />
-
-                                                        <span>
-                                                            {service.benefit}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            )}
-
-                                            <div className="mt-auto flex items-center gap-2 pt-8 text-[10px] uppercase tracking-[0.18em] text-silver/70 transition-colors duration-300 group-hover:text-silver">
-                                                Explore service
-
-                                                <ArrowRight
-                                                    className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
-                                                    strokeWidth={1.5}
-                                                />
-                                            </div>
-                                        </button>
-                                    </SpotlightCard>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </SpatialSection>
-            </section>
-
-            <EditorialPanel
-                open={selectedService !== null}
-                onClose={() => setSelectedServiceIndex(null)}
-                eyebrow="EXPERTISE"
-                title={selectedService?.title ?? ""}
-                description={selectedService?.description}
-            >
-                {selectedService && (
-                    <div className="mx-auto max-w-3xl">
-                        {selectedService.benefit && (
-                            <div className="mb-9 border border-silver/15 bg-midnight/60 p-6">
-                                <div className="flex gap-4">
-                                    <Check
-                                        className="mt-1 h-5 w-5 shrink-0 text-silver"
-                                        strokeWidth={1.4}
-                                    />
-
-                                    <div>
-                                        <span className="text-[10px] uppercase tracking-[0.18em] text-silver">
-                                            Client outcome
-                                        </span>
-
-                                        <p className="mt-2 text-sm leading-7 text-off-white md:text-base">
-                                            {selectedService.benefit}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {selectedService.details?.length > 0 && (
-                            <div>
-                                <PanelSectionHeading
-                                    eyebrow="Understanding the service"
-                                    title="What this includes"
-                                />
-
-                                <DetailList
-                                    items={selectedService.details}
-                                />
-                            </div>
-                        )}
-                    </div>
-                )}
-            </EditorialPanel>
-        </>
-    );
-}
-
-/* -------------------------------------------------------------------------- */
-/* 07 — RECOGNITION / PROFESSIONAL PROOF                                     */
-/* -------------------------------------------------------------------------- */
-
-export function Achievements() {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-        <>
-            <section
-                id="achievements"
-                className="border-y border-silver/10 bg-secondary-dark py-28 md:py-32"
+                id="insurance"
+                className="bg-slate-50 py-24 md:py-32"
             >
                 <div className="mx-auto max-w-7xl px-6">
                     <SectionIntro
-                        eyebrow={siteData.achievementsIntro.eyebrow}
-                        title={siteData.achievementsIntro.title}
-                        description={siteData.achievementsIntro.description}
-                        align="center"
+                        eyebrow={siteData.insurance.eyebrow}
+                        title={siteData.insurance.title}
+                        description={siteData.insurance.description}
                     />
 
-                    <div className="mt-16 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                        {siteData.achievements.map((achievement, index) => (
-                            <FadeIn
-                                key={`${achievement.category}-${index}`}
-                                delay={index * 0.07}
-                            >
-                                <article className="group h-full border border-silver/10 bg-midnight p-7 transition-colors duration-500 hover:border-silver/25 md:p-8">
-                                    <div className="mb-8 flex items-center justify-between">
-                                        <Award
-                                            className="h-6 w-6 text-silver"
-                                            strokeWidth={1.3}
-                                        />
-
-                                        <span className="text-[10px] uppercase tracking-[0.18em] text-silver/50">
+                    <div className="mt-14 grid gap-5 md:grid-cols-3">
+                        {siteData.insurance.categories.map(
+                            (category, index) => (
+                                <FadeIn
+                                    key={category.title}
+                                    delay={index * 0.08}
+                                >
+                                    <a
+                                        href={category.href}
+                                        className="group block h-full border border-dark-blue/10 bg-white p-7 transition-all duration-500 hover:-translate-y-1 hover:border-yellow md:p-9"
+                                    >
+                                        <span className="font-serif text-2xl text-yellow/80">
                                             {String(index + 1).padStart(
                                                 2,
                                                 "0",
                                             )}
                                         </span>
-                                    </div>
 
-                                    <h3 className="text-lg text-off-white">
-                                        {achievement.title ||
-                                            achievement.category}
-                                    </h3>
+                                        <h3 className="mt-7 font-serif text-2xl text-dark-blue">
+                                            {category.title}
+                                        </h3>
 
-                                    <p className="mt-3 text-sm leading-7 text-light-silver/70">
-                                        {achievement.description}
-                                    </p>
+                                        <p className="mt-4 text-sm leading-7 text-dark-blue/65">
+                                            {category.description}
+                                        </p>
 
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsOpen(true)}
-                                        className="mt-7 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-silver/70 transition-colors duration-300 hover:text-silver"
-                                    >
-                                        View professional proof
+                                        <span className="mt-8 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.17em] text-dark-blue/60">
+                                            Explore
 
-                                        <ArrowRight
-                                            className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
-                                            strokeWidth={1.5}
-                                        />
-                                    </button>
-                                </article>
-                            </FadeIn>
-                        ))}
+                                            <ArrowRight
+                                                className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
+                                                strokeWidth={1.5}
+                                            />
+                                        </span>
+                                    </a>
+                                </FadeIn>
+                            ),
+                        )}
                     </div>
+
+                    <FadeIn delay={0.2} className="mt-12 text-center">
+                        <ExploreButton
+                            label="View insurance providers"
+                            onClick={() => setIsOpen(true)}
+                        />
+                    </FadeIn>
                 </div>
             </section>
 
             <EditorialPanel
                 open={isOpen}
                 onClose={() => setIsOpen(false)}
-                eyebrow={siteData.achievementsIntro.eyebrow}
-                title="Professional proof"
-                description={siteData.achievementsIntro.description}
+                eyebrow={siteData.insurers.eyebrow}
+                title={siteData.insurers.title}
+                description={siteData.insurers.description}
                 width="wide"
             >
-                <div className="mx-auto max-w-4xl">
-                    <div className="grid gap-5 md:grid-cols-2">
-                        {siteData.achievements.map((achievement, index) => (
-                            <article
-                                key={`${achievement.category}-${index}-detail`}
-                                className="border border-silver/10 bg-midnight p-6 md:p-7"
-                            >
-                                <div className="flex items-center justify-between gap-5">
-                                    <Award
-                                        className="h-5 w-5 text-silver"
-                                        strokeWidth={1.3}
-                                    />
-
-                                    <span className="text-[10px] uppercase tracking-[0.18em] text-silver/50">
-                                        {String(index + 1).padStart(
-                                            2,
-                                            "0",
-                                        )}
-                                    </span>
-                                </div>
-
-                                <h3 className="mt-6 font-serif text-2xl text-off-white md:text-3xl">
-                                    {achievement.title ||
-                                        achievement.category}
-                                </h3>
-
-                                <p className="mt-3 text-sm leading-7 text-light-silver/75">
-                                    {achievement.description}
-                                </p>
-
-                                {achievement.details?.length > 0 && (
-                                    <div className="mt-6 border-t border-silver/10 pt-6">
-                                        <DetailList
-                                            items={achievement.details}
-                                        />
-                                    </div>
-                                )}
-                            </article>
-                        ))}
-                    </div>
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                    {siteData.insurers.items.map((insurer, index) => (
+                        <div
+                            key={`${insurer.name}-${index}`}
+                            className="flex min-h-32 items-center justify-center border border-dark-blue/10 bg-white p-6"
+                        >
+                            <img
+                                src={insurer.logo}
+                                alt={insurer.alt}
+                                className="max-h-16 max-w-full object-contain"
+                            />
+                        </div>
+                    ))}
                 </div>
             </EditorialPanel>
         </>
@@ -1008,7 +511,149 @@ export function Achievements() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 08 — PROFESSIONAL GALLERY                                                  */
+/* 04 — Life Insurance                                                        */
+/* -------------------------------------------------------------------------- */
+
+export function LifeInsurance() {
+    return (
+        <section
+            id="life-insurance"
+            className="bg-white py-24 md:py-32"
+        >
+            <div className="mx-auto max-w-7xl px-6">
+                <SectionIntro
+                    eyebrow={siteData.lifeInsurance.eyebrow}
+                    title={siteData.lifeInsurance.title}
+                    description={siteData.lifeInsurance.description}
+                />
+
+                <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                    {siteData.lifeInsurance.services.map((item, index) => (
+                        <FadeIn
+                            key={item.title}
+                            delay={index * 0.07}
+                        >
+                            <div className="h-full border border-dark-blue/10 bg-white p-7 transition-colors duration-300 hover:border-yellow md:p-8">
+                                <span className="font-serif text-2xl text-yellow">
+                                    {String(index + 1).padStart(2, "0")}
+                                </span>
+
+                                <h3 className="mt-7 font-serif text-xl text-dark-blue">
+                                    {item.title}
+                                </h3>
+
+                                <p className="mt-4 text-sm leading-7 text-dark-blue/65">
+                                    {item.description}
+                                </p>
+                            </div>
+                        </FadeIn>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* -------------------------------------------------------------------------- */
+/* 05 — Health Insurance                                                      */
+/* -------------------------------------------------------------------------- */
+
+export function HealthInsurance() {
+    return (
+        <section
+            id="health-insurance"
+            className="bg-slate-50 py-24 md:py-32"
+        >
+            <div className="mx-auto max-w-7xl px-6">
+                <SectionIntro
+                    eyebrow={siteData.healthInsurance.eyebrow}
+                    title={siteData.healthInsurance.title}
+                    description={siteData.healthInsurance.description}
+                />
+
+                <div className="mt-14 grid gap-5 md:grid-cols-3">
+                    {siteData.healthInsurance.services.map((item, index) => (
+                        <FadeIn
+                            key={item.title}
+                            delay={index * 0.08}
+                        >
+                            <div className="h-full border border-dark-blue/10 bg-white p-8 md:p-10">
+                                <span className="font-serif text-3xl text-yellow">
+                                    {String(index + 1).padStart(2, "0")}
+                                </span>
+
+                                <h3 className="mt-7 font-serif text-2xl text-dark-blue">
+                                    {item.title}
+                                </h3>
+
+                                <p className="mt-4 text-sm leading-7 text-dark-blue/65">
+                                    {item.description}
+                                </p>
+                            </div>
+                        </FadeIn>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* -------------------------------------------------------------------------- */
+/* 06 — General Insurance                                                     */
+/* -------------------------------------------------------------------------- */
+
+export function GeneralInsurance() {
+    return (
+        <section
+            id="general-insurance"
+            className="bg-dark-blue py-24 md:py-32"
+        >
+            <div className="mx-auto max-w-7xl px-6">
+                <div className="max-w-3xl">
+                    <FadeIn>
+                        <span className="text-[11px] uppercase tracking-[0.24em] text-yellow">
+                            {siteData.generalInsurance.eyebrow}
+                        </span>
+
+                        <h2 className="mt-4 font-serif text-4xl leading-[1.08] text-white md:text-5xl lg:text-6xl">
+                            {siteData.generalInsurance.title}
+                        </h2>
+
+                        <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 md:text-lg">
+                            {siteData.generalInsurance.description}
+                        </p>
+                    </FadeIn>
+                </div>
+
+                <div className="mt-14 grid gap-px overflow-hidden border border-white/15 bg-white/15 sm:grid-cols-2">
+                    {siteData.generalInsurance.services.map(
+                        (item, index) => (
+                            <FadeIn
+                                key={item.title}
+                                delay={index * 0.07}
+                                className="bg-dark-blue"
+                            >
+                                <div className="h-full p-8 md:p-10">
+                                    <span className="font-serif text-2xl text-yellow">
+                                        {String(index + 1).padStart(2, "0")}
+                                    </span>
+
+                                    <h3 className="mt-7 font-serif text-2xl text-white">
+                                        {item.title}
+                                    </h3>
+
+                                </div>
+                            </FadeIn>
+                        ),
+                    )}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* -------------------------------------------------------------------------- */
+/* 07 — Gallery                                                               */
 /* -------------------------------------------------------------------------- */
 
 export function Gallery() {
@@ -1022,12 +667,7 @@ export function Gallery() {
             : null;
 
     const goToPrevious = () => {
-        if (
-            selectedGalleryIndex === null ||
-            siteData.gallery.length === 0
-        ) {
-            return;
-        }
+        if (selectedGalleryIndex === null) return;
 
         setSelectedGalleryIndex(
             selectedGalleryIndex === 0
@@ -1037,12 +677,7 @@ export function Gallery() {
     };
 
     const goToNext = () => {
-        if (
-            selectedGalleryIndex === null ||
-            siteData.gallery.length === 0
-        ) {
-            return;
-        }
+        if (selectedGalleryIndex === null) return;
 
         setSelectedGalleryIndex(
             selectedGalleryIndex === siteData.gallery.length - 1
@@ -1055,7 +690,7 @@ export function Gallery() {
         <>
             <section
                 id="gallery"
-                className="bg-midnight py-28 md:py-36"
+                className="bg-white py-24 md:py-32"
             >
                 <div className="mx-auto max-w-7xl px-6">
                     <SectionIntro
@@ -1065,11 +700,11 @@ export function Gallery() {
                         align="center"
                     />
 
-                    <div className="mt-16 grid gap-4 md:grid-cols-12 md:grid-rows-2">
+                    <div className="mt-14 grid gap-4 md:grid-cols-12 md:grid-rows-2">
                         {siteData.gallery.map((item, index) => (
                             <FadeIn
                                 key={`${item.title}-${index}`}
-                                delay={index * 0.07}
+                                delay={index * 0.06}
                                 className={
                                     index === 0
                                         ? "md:col-span-7 md:row-span-2"
@@ -1081,7 +716,7 @@ export function Gallery() {
                                     onClick={() =>
                                         setSelectedGalleryIndex(index)
                                     }
-                                    className="group relative block h-full min-h-64 w-full overflow-hidden bg-secondary-dark text-left"
+                                    className="group relative block h-full min-h-64 w-full overflow-hidden bg-slate-100 text-left"
                                     aria-label={`Open ${item.title}`}
                                 >
                                     <ImageReveal
@@ -1090,18 +725,18 @@ export function Gallery() {
                                         className="h-full min-h-64 w-full"
                                     />
 
-                                    <div className="absolute inset-0 bg-midnight/0 transition-colors duration-500 group-hover:bg-midnight/20" />
+                                    <div className="absolute inset-0 bg-dark-blue/0 transition-colors duration-500 group-hover:bg-dark-blue/20" />
 
-                                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-midnight/90 via-midnight/30 to-transparent p-6 pt-20">
-                                        <span className="text-[10px] uppercase tracking-[0.18em] text-silver">
+                                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-dark-blue/90 via-dark-blue/20 to-transparent p-6 pt-20">
+                                        <span className="text-[10px] uppercase tracking-[0.18em] text-yellow">
                                             {item.category}
                                         </span>
 
-                                        <h3 className="mt-2 font-serif text-xl text-off-white">
+                                        <h3 className="mt-2 font-serif text-xl text-white">
                                             {item.title}
                                         </h3>
 
-                                        <span className="mt-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-light-silver/70 transition-colors group-hover:text-off-white">
+                                        <span className="mt-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-white/75">
                                             View moment
 
                                             <ArrowRight
@@ -1128,35 +763,19 @@ export function Gallery() {
                 {selectedGalleryItem &&
                     selectedGalleryIndex !== null && (
                         <div className="mx-auto max-w-5xl">
-                            <div className="relative overflow-hidden border border-silver/10 bg-midnight">
+                            <div className="overflow-hidden border border-dark-blue/10 bg-slate-50">
                                 <div className="aspect-[16/9] w-full">
-                                    {selectedGalleryItem.category === "VIDEO" &&
-                                        selectedGalleryItem.video ? (
-                                        <div className="relative overflow-hidden border border-silver/10 bg-black">
-                                            <video
-                                                src={selectedGalleryItem.video}
-                                                poster={selectedGalleryItem.image}
-                                                controls
-                                                playsInline
-                                                preload="metadata"
-                                                className="mx-auto max-h-[70vh] w-full object-contain"
-                                            >
-                                                Your browser does not support the video element.
-                                            </video>
-                                        </div>
-                                    ) : (
-                                        <ImageReveal
-                                            src={selectedGalleryItem.image}
-                                            alt={selectedGalleryItem.alt}
-                                            className="..."
-                                        />
-                                    )}
+                                    <img
+                                        src={selectedGalleryItem.image}
+                                        alt={selectedGalleryItem.alt}
+                                        className="h-full w-full object-contain"
+                                    />
                                 </div>
                             </div>
 
                             <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                                 <div>
-                                    <span className="text-[10px] uppercase tracking-[0.18em] text-silver/60">
+                                    <span className="text-[10px] uppercase tracking-[0.18em] text-dark-blue/45">
                                         {String(
                                             selectedGalleryIndex + 1,
                                         ).padStart(2, "0")}{" "}
@@ -1166,38 +785,36 @@ export function Gallery() {
                                         ).padStart(2, "0")}
                                     </span>
 
-                                    <p className="mt-2 max-w-2xl text-sm leading-7 text-light-silver/75">
+                                    <p className="mt-2 max-w-2xl text-sm leading-7 text-dark-blue/65">
                                         {selectedGalleryItem.description}
                                     </p>
                                 </div>
 
-                                {siteData.gallery.length > 1 && (
-                                    <div className="flex shrink-0 gap-2">
-                                        <button
-                                            type="button"
-                                            onClick={goToPrevious}
-                                            aria-label="Previous gallery item"
-                                            className="flex h-10 w-10 items-center justify-center border border-silver/15 text-light-silver transition-colors hover:border-silver/40 hover:text-off-white"
-                                        >
-                                            <ChevronLeft
-                                                className="h-4 w-4"
-                                                strokeWidth={1.4}
-                                            />
-                                        </button>
+                                <div className="flex shrink-0 gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={goToPrevious}
+                                        aria-label="Previous gallery item"
+                                        className="flex h-10 w-10 items-center justify-center border border-dark-blue/15 text-dark-blue transition-colors hover:border-yellow"
+                                    >
+                                        <ChevronLeft
+                                            className="h-4 w-4"
+                                            strokeWidth={1.4}
+                                        />
+                                    </button>
 
-                                        <button
-                                            type="button"
-                                            onClick={goToNext}
-                                            aria-label="Next gallery item"
-                                            className="flex h-10 w-10 items-center justify-center border border-silver/15 text-light-silver transition-colors hover:border-silver/40 hover:text-off-white"
-                                        >
-                                            <ChevronRight
-                                                className="h-4 w-4"
-                                                strokeWidth={1.4}
-                                            />
-                                        </button>
-                                    </div>
-                                )}
+                                    <button
+                                        type="button"
+                                        onClick={goToNext}
+                                        aria-label="Next gallery item"
+                                        className="flex h-10 w-10 items-center justify-center border border-dark-blue/15 text-dark-blue transition-colors hover:border-yellow"
+                                    >
+                                        <ChevronRight
+                                            className="h-4 w-4"
+                                            strokeWidth={1.4}
+                                        />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     )}
@@ -1207,115 +824,74 @@ export function Gallery() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 09 — PROFESSIONAL APPROACH                                                 */
+/* Forms — downloadable client resources                                     */
 /* -------------------------------------------------------------------------- */
 
-export function Approach() {
-    const [isOpen, setIsOpen] = useState(false);
-
+export function Forms() {
     return (
-        <>
-            <section
-                id="approach"
-                className="bg-navy py-28 md:py-36"
-            >
-                <div className="mx-auto max-w-7xl px-6">
-                    <SectionIntro
-                        eyebrow={siteData.approach.eyebrow}
-                        title={siteData.approach.title}
-                        description={siteData.approach.description}
-                        align="center"
-                    />
+        <section
+            id="forms"
+            className="bg-slate-50 py-24 md:py-32"
+        >
+            <div className="mx-auto max-w-7xl px-6">
+                <SectionIntro
+                    eyebrow={siteData.formsIntro.eyebrow}
+                    title={siteData.formsIntro.title}
+                    description={siteData.formsIntro.description}
+                    align="center"
+                />
 
-                    <div className="mx-auto mt-16 grid max-w-5xl gap-px overflow-hidden border border-silver/10 bg-silver/10 md:grid-cols-4">
-                        {siteData.approach.principles.map(
-                            (principle, index) => (
-                                <FadeIn
-                                    key={`${principle.title}-${index}`}
-                                    delay={index * 0.07}
-                                    className="h-full bg-navy"
-                                >
-                                    <div className="h-full p-7 md:p-8">
-                                        <span className="font-serif text-2xl text-silver/50">
-                                            {String(index + 1).padStart(
-                                                2,
-                                                "0",
-                                            )}
-                                        </span>
-
-                                        <h3 className="mt-7 text-lg text-off-white">
-                                            {principle.title}
-                                        </h3>
-
-                                        <p className="mt-3 text-sm leading-6 text-light-silver/70">
-                                            {principle.description}
-                                        </p>
-                                    </div>
-                                </FadeIn>
-                            ),
-                        )}
-                    </div>
-
-                    <FadeIn
-                        delay={0.2}
-                        className="mt-12 text-center"
-                    >
-                        <ExploreButton
-                            label="Explore the approach"
-                            onClick={() => setIsOpen(true)}
-                        />
-                    </FadeIn>
-                </div>
-            </section>
-
-            <EditorialPanel
-                open={isOpen}
-                onClose={() => setIsOpen(false)}
-                eyebrow={siteData.approach.eyebrow}
-                title={siteData.approach.title}
-                description={siteData.approach.description}
-            >
-                <div className="mx-auto max-w-4xl">
-                    <div className="grid gap-5 md:grid-cols-2">
-                        {siteData.approach.principles.map(
-                            (principle, index) => (
-                                <article
-                                    key={`${principle.title}-${index}-panel`}
-                                    className="border border-silver/10 bg-midnight p-7 md:p-8"
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <span className="font-serif text-2xl text-silver/50">
-                                            {String(index + 1).padStart(
-                                                2,
-                                                "0",
-                                            )}
-                                        </span>
-
-                                        <Clock3
-                                            className="h-5 w-5 text-silver/60"
-                                            strokeWidth={1.3}
+                <div className="mx-auto mt-14 grid max-w-6xl gap-4 md:grid-cols-2">
+                    {siteData.forms.map((form, index) => (
+                        <FadeIn
+                            key={form.file}
+                            delay={index * 0.06}
+                        >
+                            <article className="flex h-full flex-col border border-dark-blue/10 bg-white p-6 md:p-7">
+                                <div className="flex items-start gap-5">
+                                    <div className="flex h-11 w-11 shrink-0 items-center justify-center border border-yellow/40 bg-yellow/10">
+                                        <FileText
+                                            className="h-5 w-5 text-dark-blue"
+                                            strokeWidth={1.4}
                                         />
                                     </div>
 
-                                    <h3 className="mt-7 font-serif text-2xl text-off-white">
-                                        {principle.title}
-                                    </h3>
+                                    <div>
+                                        <h3 className="font-serif text-xl text-dark-blue">
+                                            {form.title}
+                                        </h3>
 
-                                    <p className="mt-4 text-sm leading-7 text-light-silver/75">
-                                        {principle.description}
-                                    </p>
-                                </article>
-                            ),
-                        )}
-                    </div>
+                                        <p className="mt-2 text-sm leading-6 text-dark-blue/60">
+                                            {form.description}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="mt-auto pt-7">
+                                    <a
+                                        href={form.file}
+                                        download
+                                        aria-label={`Download ${form.title}`}
+                                        className="group inline-flex items-center gap-2 border border-dark-blue bg-dark-blue px-5 py-3 text-[10px] uppercase tracking-[0.16em] text-white transition-colors duration-300 hover:border-yellow hover:bg-yellow hover:text-dark-blue"
+                                    >
+                                        <Download
+                                            className="h-4 w-4"
+                                            strokeWidth={1.5}
+                                        />
+
+                                        {form.fileLabel}
+                                    </a>
+                                </div>
+                            </article>
+                        </FadeIn>
+                    ))}
                 </div>
-            </EditorialPanel>
-        </>
+            </div>
+        </section>
     );
 }
-
 /* -------------------------------------------------------------------------- */
-/* 10 — LIC PAYMENT                                                           */
+/* LIC Payment                                                                */
 /* -------------------------------------------------------------------------- */
 
 export function PaymentCTA() {
@@ -1324,36 +900,28 @@ export function PaymentCTA() {
     return (
         <section
             id="payment"
-            className="border-y border-silver/10 bg-soft-blue/20 py-24 md:py-28"
+            className="border-y border-dark-blue/10 bg-yellow py-20 md:py-24"
         >
             <div className="mx-auto max-w-4xl px-6 text-center">
                 <FadeIn>
-                    <span className="text-[11px] uppercase tracking-[0.24em] text-silver">
+                    <span className="text-[11px] uppercase tracking-[0.24em] text-dark-blue/65">
                         {siteData.payment.eyebrow}
                     </span>
 
-                    <h2 className="mt-4 font-serif text-3xl text-off-white md:text-5xl">
+                    <h2 className="mt-4 font-serif text-3xl text-dark-blue md:text-5xl">
                         {siteData.payment.title}
                     </h2>
 
-                    <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-light-silver/75 md:text-base">
+                    <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-dark-blue/70 md:text-base">
                         {siteData.payment.description}
                     </p>
 
-                    {paymentLink ? (
+                    {paymentLink && (
                         <a
                             href={paymentLink}
-                            target={
-                                siteData.payment.opensInNewTab
-                                    ? "_blank"
-                                    : undefined
-                            }
-                            rel={
-                                siteData.payment.opensInNewTab
-                                    ? "noopener noreferrer"
-                                    : undefined
-                            }
-                            className="mt-8 inline-flex items-center gap-3 bg-off-white px-7 py-4 text-xs font-medium uppercase tracking-[0.14em] text-navy transition-colors duration-300 hover:bg-silver"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-8 inline-flex items-center gap-3 bg-dark-blue px-7 py-4 text-xs font-medium uppercase tracking-[0.14em] text-white transition-colors duration-300 hover:bg-dark-blue/90"
                         >
                             {siteData.payment.buttonLabel}
 
@@ -1362,13 +930,39 @@ export function PaymentCTA() {
                                 strokeWidth={1.5}
                             />
                         </a>
-                    ) : (
-                        <span className="mt-8 inline-flex cursor-not-allowed items-center gap-3 border border-silver/20 px-7 py-4 text-xs uppercase tracking-[0.14em] text-light-silver/50">
-                            Payment link coming soon
-                        </span>
                     )}
                 </FadeIn>
             </div>
         </section>
     );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Compatibility exports                                                       */
+/* -------------------------------------------------------------------------- */
+/*
+ * page.tsx will be updated next to use the new section structure.
+ *
+ * These temporary exports prevent the current page from breaking before
+ * that update is made.
+ */
+
+export function Experience() {
+    return <Insurance />;
+}
+
+export function LicAssociation() {
+    return <LifeInsurance />;
+}
+
+export function Services() {
+    return <HealthInsurance />;
+}
+
+export function Achievements() {
+    return <GeneralInsurance />;
+}
+
+export function Approach() {
+    return <Forms />;
 }

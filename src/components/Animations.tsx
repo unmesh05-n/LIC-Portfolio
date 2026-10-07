@@ -68,19 +68,26 @@ export function Preloader({
                         delay: reducedMotion ? 0 : 0.25,
                         ease: EASE_EDITORIAL,
                     }}
-                    className="pointer-events-none fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-midnight"
+                    className="pointer-events-none fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-white"
                     aria-hidden="true"
                 >
-                    <div className="mb-5 font-serif text-4xl text-silver md:text-5xl">
+                    <div className="mb-5 font-serif text-4xl font-semibold text-[#003b73] md:text-5xl">
                         {counter}%
                     </div>
 
-                    <div className="relative h-px w-40 overflow-hidden bg-secondary-dark md:w-48">
+                    <div className="relative h-[3px] w-40 overflow-hidden bg-[#eef5fb] md:w-48">
                         <motion.div
-                            className="absolute inset-y-0 left-0 bg-silver"
+                            className="absolute inset-y-0 left-0 bg-[#f4c300]"
                             animate={{ width: `${counter}%` }}
-                            transition={{ duration: 0.1, ease: "linear" }}
+                            transition={{
+                                duration: 0.1,
+                                ease: "linear",
+                            }}
                         />
+                    </div>
+
+                    <div className="mt-5 text-[9px] font-semibold uppercase tracking-[0.24em] text-[#0054a6]/55">
+                        Financial Guidance
                     </div>
                 </motion.div>
             )}
@@ -265,10 +272,10 @@ export function SpotlightCard({
                     className="pointer-events-none absolute inset-0"
                     style={{
                         background: `radial-gradient(
-              500px circle at ${position.x}px ${position.y}px,
-              rgba(198, 168, 124, 0.08),
-              transparent 42%
-            )`,
+                            500px circle at ${position.x}px ${position.y}px,
+                            rgba(0, 84, 166, 0.08),
+                            transparent 42%
+                        )`,
                     }}
                 />
             )}
@@ -343,7 +350,7 @@ export function ImageReveal({
                         duration: 1,
                         ease: EASE_EDITORIAL,
                     }}
-                    className="absolute inset-0 z-20 bg-secondary-dark"
+                    className="absolute inset-0 z-20 bg-[#0054a6]"
                 />
             )}
 
@@ -420,7 +427,7 @@ export function Parallax({
 }
 
 /* -------------------------------------------------------------------------- */
-/* 7. SUBTLE DEPTH                                                           */
+/* 7. SUBTLE DEPTH                                                            */
 /* -------------------------------------------------------------------------- */
 
 type DepthProps = {
@@ -553,7 +560,7 @@ export function EditorialLine({
             style={{
                 transformOrigin: "left center",
             }}
-            className={`h-px w-full bg-silver/20 ${className}`}
+            className={`h-[2px] w-full bg-[#0054a6]/15 ${className}`}
             aria-hidden="true"
         />
     );
@@ -607,7 +614,7 @@ export function HelixBackground() {
             aria-hidden="true"
         >
             <svg
-                className="absolute h-full w-full"
+                className="absolute h-full w-full text-[#0054a6]"
                 xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="none"
             >
@@ -640,11 +647,10 @@ export function HelixBackground() {
                     width="100%"
                     height="100%"
                     fill="url(#premium-helix)"
-                    className="text-silver"
                 />
             </svg>
 
-            <div className="absolute inset-0 bg-gradient-to-b from-midnight via-transparent to-midnight" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
         </div>
     );
 }
@@ -754,7 +760,7 @@ export function ScrollProgress({
             style={{
                 scaleX: reducedMotion ? 1 : scrollYProgress,
             }}
-            className={`fixed left-0 right-0 top-0 z-[100] h-px origin-left bg-silver ${className}`}
+            className={`fixed left-0 right-0 top-0 z-[100] h-[2px] origin-left bg-[#f4c300] ${className}`}
             aria-hidden="true"
         />
     );

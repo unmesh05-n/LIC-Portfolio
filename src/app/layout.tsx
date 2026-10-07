@@ -19,7 +19,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: siteData.global.name,
-  description: siteData.global.description,
+  description: siteData.global.tagline,
   applicationName: siteData.global.name,
   keywords: [
     "LIC Advisor",
