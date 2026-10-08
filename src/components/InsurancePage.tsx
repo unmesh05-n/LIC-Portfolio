@@ -75,6 +75,49 @@ const healthCategories = [
     { title: "Top-up / Super Top-up", description: "Additional health protection that can provide coverage above a specified deductible, depending on the selected plan and policy terms." },
 ] as const;
 
+const insurers = [
+    {
+        name: "HDFC ERGO",
+        logo: "https://res.cloudinary.com/djblsvzgm/image/upload/HDFC_ERGO_fs2lfj",
+        alt: "HDFC ERGO",
+    },
+    {
+        name: "Star Health Insurance",
+        logo: "https://res.cloudinary.com/djblsvzgm/image/upload/Star_Health_tsvkvm",
+        alt: "Star Health Insurance",
+    },
+    {
+        name: "TATA AIG",
+        logo: "https://res.cloudinary.com/djblsvzgm/image/upload/TATA_AIG_rpflw7",
+        alt: "TATA AIG",
+    },
+    {
+        name: "Care Health Insurance",
+        logo: "https://res.cloudinary.com/djblsvzgm/image/upload/Care_Health_on5d4w",
+        alt: "Care Health Insurance",
+    },
+    {
+        name: "ICICI Lombard",
+        logo: "https://res.cloudinary.com/djblsvzgm/image/upload/ICICI_Lombard_x0hdkn",
+        alt: "ICICI Lombard",
+    },
+    {
+        name: "Niva Bupa",
+        logo: "https://res.cloudinary.com/djblsvzgm/image/upload/Niva_Bupa_gcfu4f",
+        alt: "Niva Bupa",
+    },
+    {
+        name: "Bajaj Health",
+        logo: "https://res.cloudinary.com/djblsvzgm/image/upload/Bajaj_Health_amzkuy",
+        alt: "Bajaj Health",
+    },
+    {
+        name: "ManipalCigna",
+        logo: "https://res.cloudinary.com/djblsvzgm/image/upload/ManipalCigna_kuqoox",
+        alt: "ManipalCigna",
+    },
+] as const;
+
 const generalCategories = [
     { title: "Car", description: "Motor insurance solutions for cars, with available coverage depending on the type of policy and protection selected." },
     { title: "Two-Wheeler", description: "Insurance solutions for two-wheelers, with coverage based on the selected policy and applicable terms." },
@@ -323,6 +366,40 @@ export default function InsurancePage() {
                                 </FadeIn>
                             );
                         })}
+                    </div>
+                </div>
+            </section>
+
+            {/* ------------------------------------------------------------------ */}
+            {/* INSURANCE PROVIDERS                                                  */}
+            {/* ------------------------------------------------------------------ */}
+
+            <section className="bg-white py-20 md:py-24">
+                <div className="mx-auto max-w-7xl px-6">
+                    <FadeIn>
+                        <div className="text-center">
+                            <span className="text-[11px] uppercase tracking-[0.24em] text-yellow">
+                                INSURANCE PROVIDERS
+                            </span>
+
+                            <h2 className="mt-4 font-serif text-4xl text-dark-blue md:text-5xl">
+                                Insurance Providers
+                            </h2>
+                        </div>
+                    </FadeIn>
+
+                    <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+                        {insurers.map((insurer, index) => (
+                            <FadeIn key={insurer.name} delay={index * 0.05}>
+                                <div className="flex h-32 items-center justify-center border border-dark-blue/10 bg-white px-6 py-5 transition-all duration-300 hover:-translate-y-1 hover:border-yellow hover:shadow-[0_18px_40px_rgba(0,59,115,0.08)] md:h-36">
+                                    <img
+                                        src={insurer.logo}
+                                        alt={insurer.alt}
+                                        className="max-h-20 w-auto max-w-full object-contain"
+                                    />
+                                </div>
+                            </FadeIn>
+                        ))}
                     </div>
                 </div>
             </section>
