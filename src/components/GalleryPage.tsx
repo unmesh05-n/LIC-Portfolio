@@ -34,7 +34,8 @@ type GalleryCategory =
     | "Awards & Recognition"
     | "Training / Seminars"
     | "Events"
-    | "Community / Social Activities";
+    | "Community / Social Activities"
+    | "MDRT Event Video";
 
 type GalleryImage = {
     src: string;
@@ -97,6 +98,24 @@ const galleryImages: GalleryImage[] = [
         title: "Professional Felicitation",
         category: "Events",
     },
+    {
+        src: "https://res.cloudinary.com/djblsvzgm/image/upload/f_auto,q_auto/financial-planning-poster.jpeg_elydvr",
+        alt: "Financial planning poster highlighting a ₹1 crore tax-free benefit claim",
+        title: "Financial Planning Poster",
+        category: "Professional Profile",
+    },
+    {
+        src: "https://res.cloudinary.com/djblsvzgm/image/upload/f_auto,q_auto/term-insurance-poster.jpeg_bthrhw",
+        alt: "Term insurance poster illustrating a ₹5 crore term plan",
+        title: "Term Insurance Poster",
+        category: "Professional Profile",
+    },
+    {
+        src: "https://res.cloudinary.com/djblsvzgm/video/upload/f_auto,q_auto/mdrt-event.mp4_qkch8g",
+        alt: "MDRT Event Video",
+        title: "MDRT Event Video",
+        category: "MDRT Event Video",
+    }
 ];
 
 export default function GalleryPage() {
@@ -178,8 +197,8 @@ export default function GalleryPage() {
                                             setActiveCategory(category)
                                         }
                                         className={`px-4 py-2.5 text-[10px] font-medium uppercase tracking-[0.12em] transition-all duration-300 ${active
-                                                ? "bg-dark-blue text-white"
-                                                : "border border-dark-blue/10 bg-white text-dark-blue/60 hover:border-yellow hover:text-dark-blue"
+                                            ? "bg-dark-blue text-white"
+                                            : "border border-dark-blue/10 bg-white text-dark-blue/60 hover:border-yellow hover:text-dark-blue"
                                             }`}
                                     >
                                         {category}
