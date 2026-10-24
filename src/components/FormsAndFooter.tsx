@@ -15,6 +15,61 @@ import { siteData } from "@/lib/data";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
+type SocialIconProps = {
+    className?: string;
+    strokeWidth?: number;
+};
+
+function InstagramIcon({
+    className = "h-5 w-5",
+    strokeWidth = 1.8,
+}: SocialIconProps) {
+    return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"
+            className={className} aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" />
+        </svg>
+    );
+}
+
+function YoutubeIcon({ className = "h-5 w-5" }: SocialIconProps) {
+    return (
+        <svg viewBox="0 0 24 24" fill="currentColor"
+            className={className} aria-hidden="true">
+            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z" />
+        </svg>
+    );
+}
+
+function FacebookIcon({ className = "h-5 w-5" }: SocialIconProps) {
+    return (
+        <svg viewBox="0 0 24 24" fill="currentColor"
+            className={className} aria-hidden="true">
+            <path d="M24 12a12 12 0 1 0-13.875 11.85v-8.38H7.08V12h3.045V9.36c0-3.005 1.79-4.673 4.533-4.673 1.312 0 2.686.234 2.686.234v2.953h-1.513c-1.49 0-1.955.925-1.955 1.874V12h3.328l-.532 3.47h-2.796v8.38A12.003 12.003 0 0 0 24 12Z" />
+        </svg>
+    );
+}
+
+const socialLinks = [
+    {
+        label: "Instagram",
+        href: "https://www.instagram.com/sindhudeepconsultants/",
+        Icon: InstagramIcon,
+    },
+    {
+        label: "YouTube",
+        href: "https://youtube.com/@sindhudeepconsultants",
+        Icon: YoutubeIcon,
+    },
+    {
+        label: "Facebook",
+        href: "https://www.facebook.com/share/1HJZfn8gBn/",
+        Icon: FacebookIcon,
+    },
+];
 /* ========================================================================== */
 /* FORMS                                                                      */
 /* ========================================================================== */
@@ -125,7 +180,7 @@ export function EnquiryContact() {
             const formData = new FormData(form);
 
             const response = await fetch(
-                "https://formspree.io/f/myeyqplp",
+                "https://formspree.io/f/myekjqkj",
                 {
                     method: "POST",
                     body: formData,
@@ -321,6 +376,27 @@ export function EnquiryContact() {
                             />
                         </a>
                     </div>
+
+                    {/* Social media links */}
+                    <div className="mt-8">
+                        <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/50">
+                            Follow Us
+                        </p>
+                        <div className="flex flex-wrap gap-3">
+                            {socialLinks.map(({ label, href, Icon }) => (
+                                <a
+                                    key={label}
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={`Visit our ${label} page`}
+                                    className="flex h-11 w-11 items-center justify-center border border-white/15 bg-white/[0.06] text-white transition-all duration-300 hover:border-[#f4c300] hover:bg-[#f4c300] hover:text-[#003b73]"
+                                >
+                                    <Icon className="h-5 w-5" strokeWidth={1.7} />
+                                </a>
+                            ))}
+                        </div>
+                    </div>
                 </motion.div>
 
                 {/* ======================================================== */}
@@ -505,6 +581,27 @@ export function Footer() {
                         <p className="mt-5 text-sm leading-6 text-slate-500">
                             {siteData.global.tagline}
                         </p>
+
+                        {/* Social media links */}
+                        <div className="mt-6">
+                            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#003b73]/50">
+                                Follow Us
+                            </p>
+                            <div className="flex gap-3">
+                                {socialLinks.map(({ label, href, Icon }) => (
+                                    <a
+                                        key={label}
+                                        href={href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={`Visit our ${label} page`}
+                                        className="flex h-10 w-10 items-center justify-center border border-[#003b73]/15 bg-[#f7fafc] text-[#003b73] transition-all duration-300 hover:border-[#0054a6] hover:bg-[#0054a6] hover:text-white"
+                                    >
+                                        <Icon className="h-4 w-4" strokeWidth={1.7} />
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
                     </div>
 
                     {/* Footer navigation */}
